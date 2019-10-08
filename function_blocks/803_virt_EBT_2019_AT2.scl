@@ -1,0 +1,155 @@
+﻿FUNCTION_BLOCK "803_virt_EBT_2019_AT2"
+{ S7_Optimized_Access := 'FALSE' }
+VERSION : 0.1
+   VAR_INPUT 
+      PAA_AB0 : Byte;
+   END_VAR
+
+   VAR_OUTPUT 
+      PAE_EW0 : Word;
+      PAE_EW64 : Word;
+   END_VAR
+
+   VAR 
+      DI { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Struct
+         S1 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         S2 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         S3 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         S4 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES04 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         B1 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         B2 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         B3 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         B11 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         B12 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES12 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES13 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES14 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES15 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES16 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         RES17 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+      END_STRUCT;
+      DI_Word { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DI : Word;
+      AI_B13 : Int;
+      DQ { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Struct
+         M1 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         M2 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         M3 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         M4 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         P1 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         P2 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         P3 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+         P4 { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} : Bool;
+      END_STRUCT;
+      DQ_Byte { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DQ : Byte;
+      Reset_Simulation : Bool := true;
+      Pause_Simulation : Bool;
+      MSR_M1 : Bool;
+      MSS_M3 : Bool;
+      MSS_M4 : Bool;
+      Regenwasserzulauf : Bool := 0;
+      Fuellstand : Real := 52.3;
+      Abtastzyklus {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      Speicher_Abtastflanke : Bool;
+      MSR_M1_Timer {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      MSS_M3_Timer {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+      MSS_M4_Timer {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
+   END_VAR
+
+   VAR_TEMP 
+      Fuellstand_kP : Real;
+   END_VAR
+
+   VAR CONSTANT 
+      Niveau_min_M1 : Real := 13.0;
+      Niveau_min_M34 : Real := 8.0;
+   END_VAR
+
+
+BEGIN
+	// Initialisierung der Simulation
+	IF #Reset_Simulation THEN
+	    #DI.S1 := FALSE;
+	    #DI.S2 := FALSE;
+	    #DI.S3 := TRUE;
+	    
+	    #Fuellstand := 52.3;
+	    
+	    #MSR_M1 := TRUE;
+	    #MSS_M3 := TRUE;
+	    #MSS_M4 := TRUE;
+	    #Regenwasserzulauf := FALSE;
+	END_IF;
+	#Reset_Simulation := FALSE;
+	
+	// Abtastzyklus und dessen Flanke erzeugen
+	#Abtastzyklus(IN := NOT #Speicher_Abtastflanke,
+	              PT := T#100MS,
+	              Q => #Speicher_Abtastflanke);
+	
+	IF NOT #Speicher_Abtastflanke OR #Pause_Simulation THEN
+	    RETURN;
+	END_IF;
+	
+	// Übernahme des PAA
+	#DQ_Byte := #PAA_AB0;
+	
+	// MSR automatisch auslösen
+	IF #MSR_M1 THEN
+	    #MSR_M1_Timer(IN := #DQ.M1 AND (NOT #DQ.M2 OR #Fuellstand <= #Niveau_min_M1),
+	                  PT := T#10S);
+	    #MSR_M1 := NOT #MSR_M1_Timer.Q;
+	ELSE
+	    RESET_TIMER(#MSR_M1_Timer);
+	END_IF;
+	
+	IF #MSS_M3 THEN
+	    #MSS_M3_Timer(IN := #DQ.M3 AND #Fuellstand <= #Niveau_min_M34,
+	                  PT := T#10S);
+	    #MSS_M3 := NOT #MSS_M3_Timer.Q;
+	ELSE
+	    RESET_TIMER(#MSS_M3_Timer);
+	END_IF;
+	
+	IF #MSS_M4 THEN
+	    #MSS_M4_Timer(IN := #DQ.M4 AND #Fuellstand <= #Niveau_min_M34,
+	                  PT := T#10S);
+	    #MSS_M4 := NOT #MSS_M4_Timer.Q;
+	ELSE
+	    RESET_TIMER(#MSS_M4_Timer);
+	END_IF;
+	
+	// Motorschutzschalter
+	#DQ.M1 := #DQ.M1 AND #MSR_M1;
+	#DQ.M3 := #DQ.M3 AND #MSS_M3;
+	#DQ.M4 := #DQ.M4 AND #MSS_M4;
+	
+	// Behälter füllen bzw. entleeren
+	#Fuellstand_kP := #Fuellstand_kP - BOOL_TO_INT(#DQ.M1 AND #DQ.M2) * 500 - BOOL_TO_INT(#DQ.M3) * 500 - BOOL_TO_INT(#DQ.M4) * 500 + BOOL_TO_INT(#Regenwasserzulauf) * 300;
+	
+	IF #DQ.M3 OR #DQ.M4 THEN
+	    IF #Fuellstand_kP < 0 AND #Fuellstand <= #Niveau_min_M34 THEN
+	        #Fuellstand_kP := 0;
+	    END_IF;
+	ELSIF #DQ.M1 AND #DQ.M2 THEN
+	    IF #Fuellstand_kP < 0 AND #Fuellstand <= #Niveau_min_M1 THEN
+	        #Fuellstand_kP := 0;
+	    END_IF;
+	END_IF;
+	
+	#Fuellstand := #Fuellstand + #Fuellstand_kP / 1000;
+	#Fuellstand := LIMIT(IN := #Fuellstand, MN := 0, MX := 100);
+	
+	// Sensoren auswerten
+	#AI_B13 := SCALE_X_INT(MIN := 0, MAX := 27648, VALUE := NORM_X_REAL(MIN := 0, MAX := 100, VALUE := #Fuellstand));
+	#DI.B1 := #MSR_M1;
+	#DI.B2 := #MSS_M3;
+	#DI.B3 := #MSS_M4;
+	#DI.B11 := (#Fuellstand >= 98);
+	#DI.B12 := (#Fuellstand >= #Niveau_min_M34 + 2);
+	
+	// PAE ausgeben
+	#PAE_EW0 := #DI_Word;
+	#PAE_EW64 := INT_TO_WORD(#AI_B13);
+END_FUNCTION_BLOCK
+
