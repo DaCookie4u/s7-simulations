@@ -1,0 +1,66 @@
+﻿open Portal WithoutUserInterface
+
+open Project "X:\Automatisierung\800_virt_Reaktor\800_virt_Reaktor.ap13"
+# Generelle Objekte
+select Hmi "HMI_RT_Reaktor"
+select VbScripts "HMI_Verbinden"
+export VbScripts "X:\Stuff\02_TIA_Openness\vbscripts"
+select Connections "HMI_Simulation"
+export Connections "X:\Stuff\02_TIA_Openness\connections"
+
+# Reaktor
+select Plc "PLC_Reaktor"
+select ProgramBlocks "800_virt_Reaktor"
+sourcegen ProgramBlocks "X:\Stuff\02_TIA_Openness\800_virt_Reaktor"
+select Hmi "HMI_RT_Reaktor"
+select Graphics
+export Graphics "X:\Stuff\02_TIA_Openness\800_virt_Reaktor\graphics"
+select Screens
+export Screens "X:\Stuff\02_TIA_Openness\800_virt_Reaktor\screens"
+select HmiTagTables "Standard-Variablentabelle"
+export HmiTagTables "X:\Stuff\02_TIA_Openness\800_virt_Reaktor\hmitagtables"
+close Project
+
+
+open Project "X:\Automatisierung\801_virt_Sortieranlage\801_virt_Sortieranlage.ap13"
+# Sortieranlage
+select Plc "PLC_Sortieranlage"
+select ProgramBlocks "801_virt_Sortieranlage"
+sourcegen ProgramBlocks "X:\Stuff\02_TIA_Openness\801_virt_Sortieranlage"
+select Hmi "HMI_RT_Sortieranlage"
+select Graphics
+export Graphics "X:\Stuff\02_TIA_Openness\801_virt_Sortieranlage\graphics"
+select Screens
+export Screens "X:\Stuff\02_TIA_Openness\801_virt_Sortieranlage\screens"
+select HmiTagTables
+export HmiTagTables "X:\Stuff\02_TIA_Openness\801_virt_Sortieranlage\hmitagtables"
+close Project
+
+
+open Project "X:\Automatisierung\802_virt_Ampelanlage\802_virt_Ampelanlage.ap13"
+select Plc "PLC_Ampelanlage"
+select ProgramBlocks "802_virt_Ampelanlage"
+sourcegen ProgramBlocks "X:\Stuff\02_TIA_Openness\802_virt_Ampelanlage"
+select Hmi "HMI_RT_Ampelanlage"
+select Graphics
+export Graphics "X:\Stuff\02_TIA_Openness\802_virt_Ampelanlage\graphics"
+select Screens
+export Screens "X:\Stuff\02_TIA_Openness\802_virt_Ampelanlage\screens"
+select HmiTagTables
+export HmiTagTables "X:\Stuff\02_TIA_Openness\802_virt_Ampelanlage\hmitagtables"
+close Project
+
+open Project "X:\Automatisierung\803_virt_EBT_2019_AT2\803_virt_EBT_2019_AT2.ap13"
+select Plc "PLC_EBT_2019_AT2"
+select ProgramBlocks "803_virt_EBT_2019_AT2"
+sourcegen ProgramBlocks "X:\Stuff\02_TIA_Openness\803_virt_EBT_2019_AT2"
+select Hmi "HMI_RT_EBT_2019_AT2"
+select Graphics
+export Graphics "X:\Stuff\02_TIA_Openness\803_virt_EBT_2019_AT2\graphics"
+select Screens
+export Screens "X:\Stuff\02_TIA_Openness\803_virt_EBT_2019_AT2\screens"
+select HmiTagTables
+export HmiTagTables "X:\Stuff\02_TIA_Openness\803_virt_EBT_2019_AT2\hmitagtables"
+close Project
+
+disconnect Portal
