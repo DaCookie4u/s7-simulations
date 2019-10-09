@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <DocumentInfo>
+    <Created>2019-10-09T16:49:34.3866175Z</Created>
+    <ExportSetting>WithDefaults, WithReadOnly</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V13 SP2</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <Product>
+        <DisplayName>WinCC Advanced</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <Hmi.Communication.Connection ID="0">
+    <AttributeList>
+      <Driver>S7_1200_OMS</Driver>
+      <InterfaceType>ETHERNET</InterfaceType>
+      <Name>HMI_Simulation</Name>
+      <Online>true</Online>
+      <PartnerIdForRuntime>-1</PartnerIdForRuntime>
+      <PhysicId>S7_ETHERNET_IP4</PhysicId>
+      <ProtocolId>S7_ETHERNET_IP4</ProtocolId>
+      <ReceiveNcAlarms>None</ReceiveNcAlarms>
+      <ReceiveNcMessages>false</ReceiveNcMessages>
+      <ReceiveSimotionToAlarms>false</ReceiveSimotionToAlarms>
+    </AttributeList>
+    <ObjectList>
+      <Hmi.Alarm.AlarmDisplayClass ID="1" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass0</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="2" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass1</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="3" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass2</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="4" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass3</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="5" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass4</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="6" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass5</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="7" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass6</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="8" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass7</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="9" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass8</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="A" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass9</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="B" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass10</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="C" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass11</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="D" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass12</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="E" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass13</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="F" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass14</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="10" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass15</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Alarm.AlarmDisplayClass ID="11" AggregationName="AlarmDisplayClasses">
+        <AttributeList>
+          <Id>DisplayClass16</Id>
+          <Selected>true</Selected>
+        </AttributeList>
+      </Hmi.Alarm.AlarmDisplayClass>
+      <Hmi.Communication.AreaPointer ID="12" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>1</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="13" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>2</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="14" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>3</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="15" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>4</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="16" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>5</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="17" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>6</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="18" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>7</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="19" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>Coordination</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>8</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="1A" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>DateTime</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>1</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="1B" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>JobMailbox</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>1</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.AreaPointer ID="1C" AggregationName="AreaPointers">
+        <AttributeList>
+          <AreaPointerType>DataMailbox</AreaPointerType>
+          <LogicalAddress />
+          <NameIndex>1</NameIndex>
+        </AttributeList>
+      </Hmi.Communication.AreaPointer>
+      <Hmi.Communication.NameValuePair ID="1D" AggregationName="PhysicValues">
+        <AttributeList>
+          <Name>LocAddress</Name>
+          <Value>192.168.0.2</Value>
+        </AttributeList>
+      </Hmi.Communication.NameValuePair>
+      <Hmi.Communication.NameValuePair ID="1E" AggregationName="PhysicValues">
+        <AttributeList>
+          <Name>LocDeviceName</Name>
+          <Value>S7ONLINE</Value>
+        </AttributeList>
+      </Hmi.Communication.NameValuePair>
+      <Hmi.Communication.NameValuePair ID="1F" AggregationName="ProtocolValues">
+        <AttributeList>
+          <Name>TimeSyncMode</Name>
+          <Value>None</Value>
+        </AttributeList>
+      </Hmi.Communication.NameValuePair>
+      <Hmi.Communication.NameValuePair ID="20" AggregationName="ProtocolValues">
+        <AttributeList>
+          <Name>RemStAddress</Name>
+          <Value>192.168.0.1</Value>
+        </AttributeList>
+      </Hmi.Communication.NameValuePair>
+      <Hmi.Communication.NameValuePair ID="21" AggregationName="ProtocolValues">
+        <AttributeList>
+          <Name>Password</Name>
+          <Value />
+        </AttributeList>
+      </Hmi.Communication.NameValuePair>
+    </ObjectList>
+  </Hmi.Communication.Connection>
+</Document>

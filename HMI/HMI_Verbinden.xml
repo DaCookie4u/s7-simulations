@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <DocumentInfo>
+    <Created>2019-10-09T16:49:33.853756Z</Created>
+    <ExportSetting>WithDefaults, WithReadOnly</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V13 SP2</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <Product>
+        <DisplayName>WinCC Advanced</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <Hmi.RuntimeScripting.VBScript ID="0">
+    <AttributeList>
+      <Code>'Tip:
+' 1. Verwenden Sie die Tastenkombination &lt;CTRL+SPACE&gt; oder &lt;CTRL+I&gt;, um eine Liste aller Objekte und Funktionen zu öffnen
+' 2. Schreiben Sie den Code unter Verwendung des HMI Runtime Objekts.
+'  Beispiel: HmiRuntime.Screens("Screen_1").
+' 3. Verwenden Sie die Tastenkombination &lt;CTRL+J&gt;, um eine Objektreferenz zu erstellen.
+'Schreiben Sie den Code ab dieser Position:
+
+ChangeConnection "HMI_Simulation", IP, Rack, Slot
+
+</Code>
+      <Name>HMI_Verbinden</Name>
+      <PreCode>
+
+</PreCode>
+      <Type>Sub</Type>
+    </AttributeList>
+    <ObjectList>
+      <Hmi.RuntimeScripting.ScriptParameter ID="1" AggregationName="Parameters">
+        <AttributeList>
+          <Name>IP</Name>
+          <Type>ByRef</Type>
+        </AttributeList>
+      </Hmi.RuntimeScripting.ScriptParameter>
+      <Hmi.RuntimeScripting.ScriptParameter ID="2" AggregationName="Parameters">
+        <AttributeList>
+          <Name>Rack</Name>
+          <Type>ByRef</Type>
+        </AttributeList>
+      </Hmi.RuntimeScripting.ScriptParameter>
+      <Hmi.RuntimeScripting.ScriptParameter ID="3" AggregationName="Parameters">
+        <AttributeList>
+          <Name>Slot</Name>
+          <Type>ByRef</Type>
+        </AttributeList>
+      </Hmi.RuntimeScripting.ScriptParameter>
+    </ObjectList>
+  </Hmi.RuntimeScripting.VBScript>
+</Document>
