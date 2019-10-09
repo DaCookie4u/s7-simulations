@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Document>
+  <DocumentInfo>
+    <Created>2019-10-09T17:12:43.4392396Z</Created>
+    <ExportSetting>WithDefaults, WithReadOnly</ExportSetting>
+    <InstalledProducts>
+      <Product>
+        <DisplayName>Totally Integrated Automation Portal</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <OptionPackage>
+        <DisplayName>TIA Portal Openness</DisplayName>
+        <DisplayVersion>V13 SP2</DisplayVersion>
+      </OptionPackage>
+      <Product>
+        <DisplayName>STEP 7 Professional</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+      <Product>
+        <DisplayName>WinCC Advanced</DisplayName>
+        <DisplayVersion>V13 SP2 Update 2</DisplayVersion>
+      </Product>
+    </InstalledProducts>
+  </DocumentInfo>
+  <Hmi.Globalization.MultiLingualGraphic ID="0">
+    <AttributeList>
+      <DefaultDithering>false</DefaultDithering>
+      <DefaultImageStream external="path">Grafik_4 files\DefaultImageStream.emf</DefaultImageStream>
+      <DefaultSmoothness>false</DefaultSmoothness>
+      <Name>Grafik_4</Name>
+    </AttributeList>
+  </Hmi.Globalization.MultiLingualGraphic>
+</Document>
