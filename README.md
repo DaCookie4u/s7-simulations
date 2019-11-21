@@ -11,3 +11,7 @@ Der Simulations-FB muss als erster Baustein im Programmablauf aufgerufen werden 
 Danach muss der Baustein mit den gewünschten Aus- und Eingängen beschaltet werden. In den meisten Fällen werden diese Byte- oder Wort-Weise übergeben. Einige Simulationen liefern auch Analogwerte zurück.
 
 Eine Beschreibung der Ein- und Ausgänge ist bei den jeweiligen Simulationen zu finden.
+
+## Anleitung
+
+Eine kurze Anleitung und eine fertige TIA-Bibliothek mit den Simulationsbausteinen gibt es hier: https://helix360.de/s7-simulationen/
