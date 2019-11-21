@@ -32,18 +32,16 @@ Der Ausgang __#PAE_EW64__ liefert den aktuellen Füllstand als Analogwert, wobei
 
 In einem Behälter werden zwei unterschiedliche chemische Ausgangsstoffe zusammengeführt, bis zu einer vorgegebenen Temperatur erwärmt und danach noch eine bestimmte Zeit gerührt.
 
-Nach Betätigung des Tasters S1 wird, sofern der Behälter leer und das Ventil Y3 geschlossen ist, das Vorlaufventil Y1 geöffnet, bis der Niveauschalter B2 anspricht.
+Nach Betätigung des Tasters _S1_ wird, sofern der Behälter leer und das Ventil _Y3_ geschlossen ist, das Vorlaufventil _Y1_ geöffnet, bis der Niveauschalter _B2_ anspricht.
 
-Danach schaltet das Rührwerk M1 ein und das Ventil Y2 wird geöffnet.
+Danach schaltet das Rührwerk _M1_ ein und das Ventil _Y2_ wird geöffnet.
 
-Spricht der Niveuaschalter B3 an, schliesst das Ventil Y2 wieder und die Heizung H1 schaltet ein.
+Spricht der Niveuaschalter _B3_ an, schliesst das Ventil _Y2_ wieder und die Heizung _H1_ schaltet ein.
 
-Meldet der Temperatursensor B4 das Erreichen der vorgegebenen Temperatur, wird die Heizung H1 abgeschaltet und für 10 Sekungen weiter gemischt.
+Meldet der Temperatursensor _B4_ das Erreichen der vorgegebenen Temperatur, wird die Heizung _H1_ abgeschaltet und für 10 Sekungen weiter gemischt. Danach schaltet das Rührwerk ab und das Ventil _Y3_ öffnet.
 
-Danach schaltet das Rührwerk ab und das Ventil Y3 öffnet.
+Meldet der Niveauschalter _B1_, dass der Behälter leer ist, wird das Ventil _Y3_ wieder geschlossen und der Prozessablauf kann wiederholt werden.
 
-Meldet der Niveauschalter B1, dass der Behälter leer ist, wird das Ventil Y3 wieder geschlossen und der Prozessablauf kann wiederholt werden.
+Mit dem Taster _S2_ kann die Ablaufkette in zurückgesetzt bzw. initialisiert werden.
 
-Mit dem Taster S2 kann die Ablaufkette in zurückgesetzt werden.
-
-Mit dem Taster S3 kann der Prozess vorzeitig beendet werden. Dabei werden alle Aktoren abgeschaltet und das Ventil Y3 geöffnet, bis der Niveauschalter B1 meldet, dass der Behälter leer ist. Danach kann der Prozessablauf erneut gestartet werden.
+Mit dem Taster _S3_ kann der Prozess vorzeitig beendet werden. Dabei werden alle Aktoren abgeschaltet und das Ventil _Y3_ geöffnet, bis der Behälter wieder leer ist. Danach kann der Prozessablauf erneut gestartet werden.
