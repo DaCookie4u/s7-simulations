@@ -1,4 +1,4 @@
-# S7 Simulatione
+# S7-Anlagen-Simulationen
 
 In diesem Repository gibt es einige virtuelle Modelle für die Siemens S7-1200 und S7-1500 Steuerung zum Download, welche zum Beispiel im Unterricht oder zu Übungszwecken verwendet werden können.
 
