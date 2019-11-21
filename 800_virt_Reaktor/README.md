@@ -1,6 +1,6 @@
 # Reaktionsprozess
 
-![Bild der Visualisierung](800_virt_Reaktor.png)
+![Bild der Visualisierung](simulation.png)
 
 ## Belegungstabellen
 
