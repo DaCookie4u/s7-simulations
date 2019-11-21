@@ -26,7 +26,7 @@ Bit | Betriebsmittel | Beschreibung
   5 |             S2 | Taster S2 (NO)
   6 |             S3 | Taster S3 (NC)
 
-Der Ausgang __#PAE_EW64__ liefert den aktuellen Füllstand als Analogwert, wobei 0V bis 10V einen Füllstand von 0% bis 100% entsprechen.
+Der Ausgang __#PAE_EW64__ liefert den aktuellen Füllstand als Analogwert, wobei 0V bis 10V einem Füllstand von 0% bis 100% entsprechen.
 
 ## Beispielaufgabe
 
