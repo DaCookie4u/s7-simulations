@@ -13,16 +13,15 @@ VERSION : 0.1
    VAR 
       DI : Struct
          S1 : Bool;
+         B1 : Bool;
+         B2 : Bool;
+         B3 : Bool;
+         B4 : Bool;
          S2 : Bool;
          S3 : Bool;
-         S4 : Bool;
-         S5 : Bool;
-         RESET : Bool;
-         S6 : Bool := true;
          RES7 : Bool;
       END_STRUCT;
-      DI_Byte { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DI : Byte;
-      AI_B1 : Int;
+      AI_B5 : Int;
       DQ : Struct
          Y1 : Bool;
          Y2 : Bool;
@@ -33,9 +32,9 @@ VERSION : 0.1
          RES06 : Bool;
          RES07 : Bool;
       END_STRUCT;
-      DQ_Byte { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DQ : Byte;
       Reset_Simulation : Bool := true;
       Pause_Simulation : Bool;
+      Fast_Forward : Bool;
       Fuellstand : Real;
       Temperatur : Real;
       Abtastzyklus {OriginalPartName := 'IEC_TIMER'; LibVersion := '1.0'} : TON_TIME;
@@ -43,6 +42,7 @@ VERSION : 0.1
    END_VAR
 
    VAR_TEMP 
+      Abtastzeit : Time;
       Fuellstand_kP : Real;
       Heizung_n : Real;
    END_VAR
@@ -61,34 +61,31 @@ BEGIN
 	(*
 	  Simulation eines Reaktors
 	  
-	  Ansteuerbare Aktuatoren, sofern %AB0 an den Eingang #PAA_AB0 angeschlossen wurde:
+	  Ansteuerbare Aktuatoren, ausgehend von %AB0 am Eingang #PAA_AB0:
 	  %A0.0   Y1      Zulaufventil 1
 	  %A0.1   Y2      Zulaufventil 2
 	  %A0.3   Y3      Ablassventil
 	  %A0.4   Y4      Heizung
 	  %A0.5   Y5      Rührmotor
 	  
-	  Simulierte digitale Sensoren und Taster, sofern %EB0 an den Ausgang #PAE_EB0 angeschlossen wurde:
+	  Simulierte digitale Sensoren und Taster, ausgehend von %EB0 am Ausgang #PAE_EB0:
 	  %E0.0   S1      Taster S1 (NO)
-	  %E0.1   S2      Leermeldung (NO, meldet TRUE bei leerem Tank)
-	  %E0.2   S3      Niveaumeldung 1 (NO)
-	  %E0.3   S4      Niveaumeldung 2 (NO)
-	  %E0.4   S5      Temperaturmeldung (NO, meldet TRUE bei Solltemperatur)
-	  %E0.5   RESET   Taster RESET (NO)
-	  %E0.6   S6      Taster S6 (NC)
+	  %E0.1   B1      Leermeldung (NO, meldet TRUE bei leerem Tank)
+	  %E0.2   B2      Niveaumeldung 1 (NO)
+	  %E0.3   B3      Niveaumeldung 2 (NO)
+	  %E0.4   B4      Temperaturmeldung (NO, meldet TRUE bei Solltemperatur)
+	  %E0.5   S2      Taster S2 (NO)
+	  %E0.6   S3      Taster S3 (NC)
 	  
-	  Simulierte analoge Sensoren, sofern %EW64 an den Ausgang #PAE_EW64 angeschlossen wurde:
+	  Simulierte analoge Sensoren, ausgehend von %EW64 am Ausgang #PAE_EW64:
 	  %EW64   B1      Füllstandssensor (0..10V)
 	*)
-	
-	// Übernahme des PAA
-	#DQ_Byte := #PAA_AB0;
 	
 	// Initialisierung der Simulation
 	IF #Reset_Simulation THEN
 	    #DI.S1 := FALSE;
-	    #DI.RESET := FALSE;
-	    #DI.S6 := TRUE;
+	    #DI.S2 := FALSE;
+	    #DI.S3 := FALSE;
 	    
 	    #Fuellstand := 0;
 	    #Temperatur := 0;
@@ -96,13 +93,25 @@ BEGIN
 	#Reset_Simulation := FALSE;
 	
 	// Abtastzyklus und dessen Flanke erzeugen
+	IF #Fast_Forward THEN
+	    #Abtastzeit := T#50ms;
+	ELSE
+	    #Abtastzeit := T#100ms;
+	END_IF;
 	#Abtastzyklus(IN := NOT #Speicher_Abtastflanke,
-	              PT := T#100MS,
+	              PT := #Abtastzeit,
 	              Q => #Speicher_Abtastflanke);
 	
 	IF NOT #Speicher_Abtastflanke OR #Pause_Simulation THEN
 	    RETURN;
 	END_IF;
+	
+	// Übernahme des PAA
+	#DQ.Y1 := (#PAA_AB0 AND 16#01) > 0;
+	#DQ.Y2 := (#PAA_AB0 AND 16#02) > 0;
+	#DQ.Y3 := (#PAA_AB0 AND 16#04) > 0;
+	#DQ.H := (#PAA_AB0 AND 16#08) > 0;
+	#DQ.M := (#PAA_AB0 AND 16#10) > 0;
 	
 	// Behälter füllen bzw. entleeren
 	IF #DQ.Y1 OR #DQ.Y2 OR #DQ.Y3 THEN
@@ -122,14 +131,21 @@ BEGIN
 	#Temperatur := LIMIT(IN := #Temperatur, MN := #Temperatur_Min, MX := #Temperatur_Max);
 	
 	// Sensoren auswerten
-	#AI_B1 := SCALE_X_INT(MIN := 0, MAX := 27648, VALUE := NORM_X_REAL(MIN := 0, MAX := 100, VALUE := #Fuellstand));
-	#DI.S2 := (#Fuellstand = 0);
-	#DI.S3 := (#Fuellstand >= #Niveau_1);
-	#DI.S4 := (#Fuellstand >= #Niveau_2);
-	#DI.S5 := (#Temperatur >= #Temperatur_S5_An AND NOT #DI.S5) OR (#Temperatur >= #Temperatur_S5_Aus AND #DI.S5);
+	#AI_B5 := SCALE_X_INT(MIN := 0, MAX := 27648, VALUE := NORM_X_REAL(MIN := 0, MAX := 100, VALUE := #Fuellstand));
+	#DI.B1 := (#Fuellstand > 0);
+	#DI.B2 := (#Fuellstand >= #Niveau_1);
+	#DI.B3 := (#Fuellstand >= #Niveau_2);
+	#DI.B4 := (#Temperatur >= #Temperatur_S5_An AND NOT #DI.B4) OR (#Temperatur >= #Temperatur_S5_Aus AND #DI.B4);
 	
 	// PAE ausgeben
-	#PAE_EB0 := #DI_Byte;
-	#PAE_EW64 := #AI_B1;
+	#PAE_EB0 := 16#0 OR BOOL_TO_BYTE(#DI.S1);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(#DI.B1), N := 1);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(#DI.B2), N := 2);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(#DI.B3), N := 3);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(#DI.B4), N := 4);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(#DI.S2), N := 5);
+	#PAE_EB0 := #PAE_EB0 OR SHL(IN := BOOL_TO_BYTE(NOT #DI.S3), N := 6);
+	
+	#PAE_EW64 := #AI_B5;
 END_FUNCTION_BLOCK
 

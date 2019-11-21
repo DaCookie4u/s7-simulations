@@ -29,7 +29,6 @@ VERSION : 0.1
          RES16 : Bool;
          RES17 : Bool;
       END_STRUCT;
-      DI_Word { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DI : Word;
       AI_B13 : Int;
       DQ : Struct
          M1 : Bool;
@@ -41,7 +40,6 @@ VERSION : 0.1
          P3 : Bool;
          P4 : Bool;
       END_STRUCT;
-      DQ_Byte { S7_HMI_Accessible := 'False'; S7_HMI_Visible := 'False'} AT DQ : Byte;
       Reset_Simulation : Bool := true;
       Pause_Simulation : Bool;
       MSR_M1 : Bool;
@@ -67,11 +65,39 @@ VERSION : 0.1
 
 
 BEGIN
+	(*
+	  Simulation eines Reaktors
+	  
+	  Ansteuerbare Aktuatoren, ausgehend von %AB0 am Eingang #PAA_AB0:
+	  %A0.0   M1      Pumpe "Nutzwasser"
+	  %A0.1   M2      Ventil "Nutzwasser"
+	  %A0.2   M3      Pumpe "Abwasser 1"
+	  %A0.3   M4      Pumpe "Abwasser 2"
+	  %A0.4   P1      Meldeleuchte "Anlage EIN"
+	  %A0.5   P2      Meldeleuchte "Störung"
+	  %A0.6   P3      Meldeleuchte "Wasserstand <25%"
+	  %A0.7   P4      Meldeleuchte "Wasserstand >75%"
+	  
+	  Simulierte digitale Sensoren und Taster, ausgehend von %EW0 am Ausgang #PAE_EW0:
+	  %E0.0   S1      Schalter Anlage EIN/AUS (NO)
+	  %E0.1   S2      Taster "Nutzwasser EIN" (NO)
+	  %E0.2   S3      Taster "Nutzwasser AUS" (NC)
+	  %E0.3   S4      Niveaumeldung 2 (NO)
+	  %E0.5   B1      Sensor "Motoschutzrelais M1" (NC)
+	  %E0.6   B2      Sensor "Motoschutzschalter M3" (NC)
+	  %E0.7   B3      Sensor "Motoschutzschalter M4" (NC)
+	  %E1.0   B11     Sensor "Wasserstand max." (NO, bei leerem Tank)
+	  %E1.1   B12     Sensor "Wasserstand min." (NO, bei leerem Tank)
+	  
+	  Simulierte analoge Sensoren, ausgehend von %EW64 am Ausgang #PAE_EW64:
+	  %EW64   B13     Sensor "Wasserstand" (0..10V)
+	*)
+	
 	// Initialisierung der Simulation
 	IF #Reset_Simulation THEN
 	    #DI.S1 := FALSE;
 	    #DI.S2 := FALSE;
-	    #DI.S3 := TRUE;
+	    #DI.S3 := FALSE;
 	    
 	    #Fuellstand := 52.3;
 	    
@@ -92,7 +118,14 @@ BEGIN
 	END_IF;
 	
 	// Übernahme des PAA
-	#DQ_Byte := #PAA_AB0;
+	#DQ.M1 := (#PAA_AB0 AND 16#01) > 0;
+	#DQ.M2 := (#PAA_AB0 AND 16#02) > 0;
+	#DQ.M3 := (#PAA_AB0 AND 16#04) > 0;
+	#DQ.M4 := (#PAA_AB0 AND 16#08) > 0;
+	#DQ.P1 := (#PAA_AB0 AND 16#10) > 0;
+	#DQ.P2 := (#PAA_AB0 AND 16#20) > 0;
+	#DQ.P3 := (#PAA_AB0 AND 16#40) > 0;
+	#DQ.P4 := (#PAA_AB0 AND 16#80) > 0;
 	
 	// MSR automatisch auslösen
 	IF #MSR_M1 THEN
@@ -149,7 +182,17 @@ BEGIN
 	#DI.B12 := (#Fuellstand >= #Niveau_min_M34 + 2);
 	
 	// PAE ausgeben
-	#PAE_EW0 := #DI_Word;
+	#PAE_EW0 := 16#0 OR BOOL_TO_WORD(#DI.B11);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.B12), N := 1);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.S1), N := 8);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.S2), N := 9);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(NOT #DI.S3), N := 10);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.S4), N := 11);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.B1), N := 13);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.B2), N := 14);
+	#PAE_EW0 := #PAE_EW0 OR SHL(IN := BOOL_TO_WORD(#DI.B3), N := 15);
+	
+	//#PAE_EW0 := #DI_Word;
 	#PAE_EW64 := INT_TO_WORD(#AI_B13);
 END_FUNCTION_BLOCK
 
