@@ -14,7 +14,7 @@ Bit | Betriebsmittel | Beschreibung
   3 |             H1 | Heizung
   4 |             M1 | Rührmotor
 
-Das an am Ausgang __#PAE_EB0__ ausgegebene Eingangsbyte liefert folgende Signale:
+Das am Ausgang __#PAE_EB0__ ausgegebene Eingangsbyte liefert folgende Signale:
 
 Bit | Betriebsmittel | Beschreibung
 --- | -------------- | ------------
